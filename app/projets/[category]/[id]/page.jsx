@@ -7,6 +7,7 @@ import Nav from "@/component/Nav";
 import Loading from "@/component/Loading";
 import "@/style/style.css";
 import { redirectionAPI } from "@/utils/redirections";
+import varUtils from "@/utils/utilsVar";
 
 export default function ShowProject() {
   const { category, id } = useParams();
@@ -57,6 +58,7 @@ export default function ShowProject() {
   React.useEffect(() => {
     const imgContainer = document.querySelector(".img-container");
     const imgContent = document.querySelector("#project-image");
+    const { windowWidth } = varUtils();
 
     imgContainer.addEventListener("mousemove", (e) => {
       let clientX = e.clientX - imgContainer.offsetLeft;
@@ -65,7 +67,7 @@ export default function ShowProject() {
       clientX = (clientX / imgContainer.offsetWidth) * 100;
       clientY = (clientY / imgContainer.offsetHeight) * 100;
 
-      if (window.innerWidth > 800) {
+      if (windowWidth > 800) {
         imgContent.style.transform = `translate(-${clientX}%, -${clientY}%) scale(2)`;
       }
     });

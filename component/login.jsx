@@ -5,14 +5,18 @@ import React from "react";
 import "@/style/style-dashboard.css";
 
 export default function Login({ setIsConnected }) {
-  const [user, setUser] = React.useState(
-    JSON.parse(sessionStorage.getItem("user"))
-      ? JSON.parse(sessionStorage.getItem("user"))
-      : {
-          password: "",
-        },
-  );
+  const [user, setUser] = React.useState();
   const mdp = "test";
+
+  React.useEffect(() => {
+    setUser(
+      JSON.parse(sessionStorage.getItem("user"))
+        ? JSON.parse(sessionStorage.getItem("user"))
+        : {
+            password: "",
+          },
+    );
+  }, []);
 
   React.useEffect(() => {
     if (user.password === mdp) {
@@ -25,7 +29,7 @@ export default function Login({ setIsConnected }) {
 
     const error = document.querySelector("#error");
 
-    if (user.password === mdp) {
+    if (user.password === mdp && typeof window !== "undefined") {
       setIsConnected(true);
       sessionStorage.setItem("user", JSON.stringify(user));
     } else {

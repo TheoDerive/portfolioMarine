@@ -8,7 +8,7 @@ export default function Loading({ isLoad }) {
 
     const performAction = () => {
       if (isLoad) {
-        //window.location.reload();
+        window.location.reload();
       }
     };
 

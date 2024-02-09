@@ -3,6 +3,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faList } from "@fortawesome/free-solid-svg-icons";
+import varUtils from "@/utils/utilsVar";
 
 export function NavDashboard() {
   function ongletSelect(e) {
@@ -50,6 +51,7 @@ export default function Nav() {
     isShow: false,
     redirect: "",
   });
+  const { windowWidth } = varUtils();
 
   React.useEffect(() => {
     const location = window.location.pathname;
@@ -94,7 +96,7 @@ export default function Nav() {
         <h2 style={{ textTransform: "uppercase" }}>Marine Sicaud</h2>
       </a>
 
-      <nav className={window.innerWidth > 800 ? "nav-desktop" : "nav-phone"}>
+      <nav className={windowWidth > 800 ? "nav-desktop" : "nav-phone"}>
         <span
           className="menu-burger"
           style={isProjectPage.isShow ? { display: "none" } : null}

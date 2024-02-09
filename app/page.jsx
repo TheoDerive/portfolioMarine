@@ -7,6 +7,7 @@ import Nav from "../component/Nav";
 import Footer from "../component/Footer";
 import Loading from "../component/Loading";
 import "../style/style.css";
+import varUtils from "@/utils/utilsVar.js";
 
 export default function Homepage() {
   const [allProject, setAllProject] = React.useState([]);
@@ -88,9 +89,10 @@ export default function Homepage() {
     const competanceLogo = document.querySelectorAll(".logo-competence");
     const callToAction = document.querySelectorAll(".calltoaction");
     const footer = document.querySelector(".footer-container");
+    const { windowWidth, windowHeight } = varUtils();
 
     const windowSizeParagraphe = () => {
-      if (window.innerWidth > 1000) {
+      if (windowWidth > 1000) {
         return 2900;
       } else {
         return 1500;
@@ -98,7 +100,7 @@ export default function Homepage() {
     };
 
     const windowSizeTitle = () => {
-      if (window.innerWidth > 1000) {
+      if (windowWidth > 1000) {
         return 1900;
       } else {
         return 400;
@@ -127,7 +129,7 @@ export default function Homepage() {
         });
       }
 
-      if (window.innerWidth < 750) {
+      if (windowWidth < 750) {
         if (pourcentage >= 48) {
           title[0].classList.add("title-remove");
           callToAction[0].classList.add("calltoaction-animation");
@@ -163,10 +165,10 @@ export default function Homepage() {
       const pageHeight = document.querySelector("html").offsetHeight;
 
       const pourcentage = Math.round(
-        ((scroll + window.innerHeight) / pageHeight) * 100,
+        ((scroll + windowHeight) / pageHeight) * 100,
       );
       const windowSize = () => {
-        if (window.innerWidth > 1000) {
+        if (windowWidth > 1000) {
           return 1300;
         } else {
           return 500;
@@ -183,7 +185,7 @@ export default function Homepage() {
       const pageHeight = document.querySelector("html").offsetHeight;
 
       const pourcentage = Math.round(
-        ((scroll + window.innerHeight) / pageHeight) * 100,
+        ((scroll + windowHeight) / pageHeight) * 100,
       );
 
       loadAnimation(pourcentage);
