@@ -5,7 +5,7 @@ import React from "react";
 import "@/style/style-dashboard.css";
 
 export default function Login({ setIsConnected }) {
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState({ password: "" });
   const mdp = "test";
 
   React.useEffect(() => {
