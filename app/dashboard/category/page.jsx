@@ -36,6 +36,8 @@ export default function () {
     }
 
     fetchData();
+
+    console.log(categories);
   }, [modification, deleteProject, isAdd]);
 
   return (
