@@ -17,7 +17,10 @@ export default function Login({ setIsConnected }) {
           },
     );
 
-    if (JSON.parse(sessionStorage.getItem("user")).password === mdp) {
+    if (
+      JSON.parse(sessionStorage.getItem("user")).password === mdp ||
+      user.password === mdp
+    ) {
       setIsConnected(true);
     }
   }, []);
