@@ -21,18 +21,12 @@ export function NavDashboard() {
       <nav className="dashboard-nav">
         <ul className="onglet-dashboard-container">
           <li className="onglet" onClick={(e) => ongletSelect(e)}>
-            <a
-              href="/238b609edb608f333ff38a1a62a1e1/"
-              className="onglet-link onglet-link-active"
-            >
+            <a href="/dashboard/" className="onglet-link onglet-link-active">
               <FontAwesomeIcon icon={faHome} />
             </a>
           </li>
           <li className="onglet" onClick={(e) => ongletSelect(e)}>
-            <a
-              href="/238b609edb608f333ff38a1a62a1e1/category"
-              className="onglet-link"
-            >
+            <a href="/dashboard/category" className="onglet-link">
               <FontAwesomeIcon icon={faList} />
             </a>
           </li>
