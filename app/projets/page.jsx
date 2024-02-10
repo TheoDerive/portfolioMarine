@@ -16,23 +16,20 @@ export default function AllProjectCategory() {
     setIsLoad(true);
 
     async function fetchData() {
-      const response = await fetch(redirectionAPI("/api/all-categories"), {
-        method: "GET",
-        mode: "cors",
-      });
-      if (response.ok === false) {
-        throw new Error(
-          "Une erreur est survenue lors de la récupération des données...",
-        );
+      try {
+        const response = await fetch("/api/all-categories");
+        if (!response.ok) {
+          throw new Error(
+            "Une erreur est survenue lors de la récupération des données...",
+          );
+        }
+        const data = await response.json();
+        setCategories(data.filter((category) => category.content.length > 0));
+        setIsLoad(false);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des catégories :", error);
+        setIsLoad(false);
       }
-
-      const data = await response.json();
-      const filteredCategories = data.filter(
-        (category) => category.content.length > 0,
-      );
-      setCategories(filteredCategories);
-      document.documentElement.classList.add("remove-overflow");
-      setIsLoad(false);
     }
 
     fetchData();
