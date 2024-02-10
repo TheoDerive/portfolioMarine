@@ -17,7 +17,7 @@ export default function AllProjectCategory() {
 
     async function fetchData() {
       try {
-        const response = await fetch("/api/all-categories");
+        const response = await fetch(redirectionAPI("/api/all-categories"));
         if (!response.ok) {
           throw new Error(
             "Une erreur est survenue lors de la récupération des données...",
