@@ -3,7 +3,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faList } from "@fortawesome/free-solid-svg-icons";
-import varUtils from "@/utils/utilsVar";
+import useWindowDimensions from "@/utils/utilsVar";
 
 export function NavDashboard() {
   function ongletSelect(e) {
@@ -51,9 +51,12 @@ export default function Nav() {
     isShow: false,
     redirect: "",
   });
-  const { windowWidth } = varUtils();
+  const [isClient, setIsClient] = React.useState(false);
+  const { windowWidth } = useWindowDimensions();
 
   React.useEffect(() => {
+    setIsClient(true);
+
     const location = window.location.pathname;
     const splitLocation = location.split("/");
     const newSplitLocation = splitLocation.slice(1, splitLocation.length);
@@ -96,7 +99,9 @@ export default function Nav() {
         <h2 style={{ textTransform: "uppercase" }}>Marine Sicaud</h2>
       </a>
 
-      <nav className={windowWidth > 800 ? "nav-desktop" : "nav-phone"}>
+      <nav
+        className={isClient && windowWidth > 800 ? "nav-desktop" : "nav-phone"}
+      >
         <span
           className="menu-burger"
           style={isProjectPage.isShow ? { display: "none" } : null}

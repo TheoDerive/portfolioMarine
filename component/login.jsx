@@ -16,13 +16,11 @@ export default function Login({ setIsConnected }) {
             password: "",
           },
     );
-  }, []);
 
-  React.useEffect(() => {
-    if (user.password === mdp) {
+    if (JSON.parse(sessionStorage.getItem("user")).password === mdp) {
       setIsConnected(true);
     }
-  });
+  }, []);
 
   function Login(e) {
     e.preventDefault();

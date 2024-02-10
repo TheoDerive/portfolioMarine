@@ -7,11 +7,12 @@ import Nav from "../component/Nav";
 import Footer from "../component/Footer";
 import Loading from "../component/Loading";
 import "../style/style.css";
-import varUtils from "@/utils/utilsVar.js";
+import useWindowDimensions from "@/utils/utilsVar.js";
 
 export default function Homepage() {
   const [allProject, setAllProject] = React.useState([]);
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
+  const { windowWidth, windowHeight } = useWindowDimensions();
 
   React.useEffect(() => {
     setIsLoad(true);
@@ -89,7 +90,6 @@ export default function Homepage() {
     const competanceLogo = document.querySelectorAll(".logo-competence");
     const callToAction = document.querySelectorAll(".calltoaction");
     const footer = document.querySelector(".footer-container");
-    const { windowWidth, windowHeight } = varUtils();
 
     const windowSizeParagraphe = () => {
       if (windowWidth > 1000) {
@@ -107,17 +107,19 @@ export default function Homepage() {
       }
     };
 
-    setTimeout(() => {
-      leftImage.style.transform = "translateX(0)";
-    }, 1000);
+    if (isLoad === false) {
+      setTimeout(() => {
+        leftImage.style.transform = "translateX(0)";
+      }, 1000);
 
-    setTimeout(() => {
-      titleAcceuil.classList.add("title-remove");
-    }, windowSizeTitle());
+      setTimeout(() => {
+        titleAcceuil.classList.add("title-remove");
+      }, windowSizeTitle());
 
-    setTimeout(() => {
-      paragraphePresentation.style.opacity = "1";
-    }, windowSizeParagraphe());
+      setTimeout(() => {
+        paragraphePresentation.style.opacity = "1";
+      }, windowSizeParagraphe());
+    }
 
     function loadAnimation(pourcentage) {
       allProject = document.querySelectorAll(".project-content");

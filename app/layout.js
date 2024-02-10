@@ -1,3 +1,5 @@
+import Loading from "@/component/Loading";
+
 export const metadata = {
   title: "Marine Sicaud",
   description: "Portfolio de Marine Sicaud",

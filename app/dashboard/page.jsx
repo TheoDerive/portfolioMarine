@@ -102,7 +102,7 @@ export default function DashboardHomepage() {
                 {allProject.map((projet) => (
                   <article className="last-project">
                     <img
-                      src={`/${projet.category.toLowerCase()}${projet.image}`}
+                      src={`/${projet.category.toLowerCase()}/${projet.image}`}
                       alt={projet.name}
                     />
                     <span className="projet-date" style={{ color: "#1E1E1E" }}>

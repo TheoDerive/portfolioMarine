@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 
 import Nav from "@/component/Nav";
 import Loading from "@/component/Loading";
 import "@/style/style.css";
 import { redirectionAPI } from "@/utils/redirections";
-import varUtils from "@/utils/utilsVar";
+import ErrorPage from "@/app/not-found";
+import useWindowDimensions from "@/utils/utilsVar";
 
 export default function ShowProject() {
   const { category, id } = useParams();
@@ -15,6 +16,8 @@ export default function ShowProject() {
   const [projet, setProjet] = React.useState(0);
   const [index, setIndex] = React.useState(0);
   const [isLoad, setIsLoad] = React.useState(false);
+  const [getError, setGetError] = React.useState(false);
+  const { windowWidth } = useWindowDimensions();
 
   React.useEffect(() => {
     setIsLoad(true);
@@ -37,45 +40,53 @@ export default function ShowProject() {
         (projet) => projet._id === id,
       );
 
-      for (let i = 0; i < filteredCategories[0].length; i++) {
-        if (
-          filteredProject[0].name === filteredCategories[0].content[i].name &&
-          filteredProject[0]._id === filteredCategories[0].content[i]._id
-        ) {
-          setIndex(i);
-        }
-      }
+      console.log(filteredProject.length > 0);
 
-      setCategories(filteredCategories[0]);
-      setProjet(filteredProject[0]);
-      document.documentElement.classList.add("remove-overflow");
-      setIsLoad(false);
+      if (filteredProject.length > 0) {
+        for (let i = 0; i < filteredCategories[0].length; i++) {
+          if (
+            filteredProject[0].name === filteredCategories[0].content[i].name &&
+            filteredProject[0]._id === filteredCategories[0].content[i]._id
+          ) {
+            setIndex(i);
+          }
+        }
+
+        setCategories(filteredCategories[0]);
+        setProjet(filteredProject[0]);
+        document.documentElement.classList.add("remove-overflow");
+        setIsLoad(false);
+      } else {
+        setGetError(true);
+        setIsLoad(false);
+      }
     }
 
     fetchData();
   }, [category, id]);
 
   React.useEffect(() => {
-    const imgContainer = document.querySelector(".img-container");
-    const imgContent = document.querySelector("#project-image");
-    const { windowWidth } = varUtils();
+    if (!getError) {
+      const imgContainer = document.querySelector(".img-container");
+      const imgContent = document.querySelector("#project-image");
 
-    imgContainer.addEventListener("mousemove", (e) => {
-      let clientX = e.clientX - imgContainer.offsetLeft;
-      let clientY = e.clientY - imgContainer.offsetTop;
+      imgContainer.addEventListener("mousemove", (e) => {
+        let clientX = e.clientX - imgContainer.offsetLeft;
+        let clientY = e.clientY - imgContainer.offsetTop;
 
-      clientX = (clientX / imgContainer.offsetWidth) * 100;
-      clientY = (clientY / imgContainer.offsetHeight) * 100;
+        clientX = (clientX / imgContainer.offsetWidth) * 100;
+        clientY = (clientY / imgContainer.offsetHeight) * 100;
 
-      if (windowWidth > 800) {
-        imgContent.style.transform = `translate(-${clientX}%, -${clientY}%) scale(2)`;
-      }
-    });
+        if (windowWidth > 800) {
+          imgContent.style.transform = `translate(-${clientX}%, -${clientY}%) scale(2)`;
+        }
+      });
 
-    imgContainer.addEventListener("mouseleave", () => {
-      imgContent.style.transform = "translate(-50%, -50%) scale(1)";
-    });
-  }, []);
+      imgContainer.addEventListener("mouseleave", () => {
+        imgContent.style.transform = "translate(-50%, -50%) scale(1)";
+      });
+    }
+  }, [getError]);
 
   function nextProjet() {
     if (index + 1 === categories.content.length) {
@@ -104,35 +115,43 @@ export default function ShowProject() {
   return (
     <>
       {isLoad ? <Loading isLoad={isLoad} /> : null}
-      <Nav />
+      {!getError ? (
+        <>
+          <Nav />
 
-      <main id="projet">
-        <section className={`image-project-page`}>
-          <button
-            className="left-button"
-            onClick={() => previousProjet()}
-          ></button>
-          <div className="img-container">
-            <img
-              src={`/${category}${projet.image}`}
-              style={projet.isLarge ? { width: "100%", height: "unset" } : null}
-              alt=""
-              id="project-image"
-            />
-          </div>
-          <button
-            className="right-button"
-            onClick={() => nextProjet()}
-          ></button>
-        </section>
-        <section className="description-project-page">
-          <h1 className=" title-project-page" id="project-title">
-            {projet.name}
-          </h1>
+          <main id="projet">
+            <section className={`image-project-page`}>
+              <button
+                className="left-button"
+                onClick={() => previousProjet()}
+              ></button>
+              <div className="img-container">
+                <img
+                  src={`/${category}${projet.image}`}
+                  style={
+                    projet.isLarge ? { width: "100%", height: "unset" } : null
+                  }
+                  alt=""
+                  id="project-image"
+                />
+              </div>
+              <button
+                className="right-button"
+                onClick={() => nextProjet()}
+              ></button>
+            </section>
+            <section className="description-project-page">
+              <h1 className=" title-project-page" id="project-title">
+                {projet.name}
+              </h1>
 
-          <p id="project-description">{projet.description}</p>
-        </section>
-      </main>
+              <p id="project-description">{projet.description}</p>
+            </section>
+          </main>
+        </>
+      ) : (
+        <ErrorPage />
+      )}
     </>
   );
 }

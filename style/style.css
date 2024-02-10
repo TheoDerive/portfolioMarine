@@ -40,6 +40,9 @@
 }
 
 @keyframes loadP {
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
   }
@@ -266,6 +269,7 @@ ul {
 }
 
 .left {
+  transition: transform 0.7s ease-out;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -293,8 +297,9 @@ ul {
   text-align: justify;
   font-size: 16px;
   animation: loadP 1s;
-  animation-delay: 2s;
+  animation-delay: 5s;
   opacity: 0;
+  transition: all 1s ease;
 }
 
 .acceuil-title {
@@ -857,7 +862,7 @@ ul {
   content: "";
   width: 70px;
   height: 70px;
-  background-image: url("../public/construction.png");
+  background-image: url("/construction.png");
   background-position: center;
   background-size: contain;
   position: absolute;
@@ -869,7 +874,7 @@ ul {
   content: "";
   width: 70px;
   height: 70px;
-  background-image: url("../public/construction.png");
+  background-image: url("/construction.png");
   background-position: center;
   background-size: contain;
   position: absolute;
@@ -893,7 +898,7 @@ ul {
   content: "";
   width: 10%;
   height: 10%;
-  background-image: url("../public/part1Logo.png");
+  background-image: url("/part1Logo.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -907,7 +912,7 @@ ul {
   content: "";
   width: 40%;
   height: 40%;
-  background-image: url("../public/part2Logo.png");
+  background-image: url("/part2Logo.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
