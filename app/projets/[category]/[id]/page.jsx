@@ -15,13 +15,11 @@ export default function ShowProject() {
   const [categories, setCategories] = React.useState(0);
   const [projet, setProjet] = React.useState(0);
   const [index, setIndex] = React.useState(0);
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
   const [getError, setGetError] = React.useState(false);
   const { windowWidth } = useWindowDimensions();
 
   React.useEffect(() => {
-    setIsLoad(true);
-
     async function fetchData() {
       const response = await fetch(
         redirectionAPI(`/api/get-categorie/${category}`),

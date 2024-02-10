@@ -13,12 +13,10 @@ import ErrorPage from "@/app/not-found";
 export default function ProjectPage() {
   let { category } = useParams();
   const [projectCategories, setProjectCategories] = React.useState([]);
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
   const [getError, setGetError] = React.useState(false);
 
   React.useEffect(() => {
-    setIsLoad(true);
-
     async function fetchData() {
       const response = await fetch(
         redirectionAPI(`/api/get-categorie/${category}`),
@@ -30,6 +28,7 @@ export default function ProjectPage() {
       }
       const data = await response.json();
 
+      console.log(data);
       if (data.length > 0) {
         setProjectCategories(data[0].content);
         document.documentElement.classList.add("remove-overflow");

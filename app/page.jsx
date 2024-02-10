@@ -12,11 +12,10 @@ import getAllCategories from "@/utils/getAllCategories.jsx";
 
 export default function Homepage() {
   const [allProject, setAllProject] = React.useState([]);
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
   const { windowWidth, windowHeight } = useWindowDimensions();
 
   React.useEffect(() => {
-    setIsLoad(true);
     async function getData() {
       const data = await getAllCategories();
 

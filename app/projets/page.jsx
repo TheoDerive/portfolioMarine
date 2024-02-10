@@ -10,11 +10,9 @@ import "../../style/style.css";
 
 export default function AllProjectCategory() {
   const [categories, setCategories] = React.useState([]);
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoad, setIsLoad] = React.useState(true);
 
   React.useEffect(() => {
-    setIsLoad(true);
-
     async function fetchData() {
       try {
         const response = await fetch(redirectionAPI("/api/all-categories"));

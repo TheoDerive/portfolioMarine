@@ -6,7 +6,7 @@ import "@/style/style-dashboard.css";
 
 export default function Login({ setIsConnected }) {
   const [user, setUser] = React.useState({ password: "" });
-  const mdp = "test";
+  const mdp = process.env.NEXT_PUBLIC_MOT_DE_PASSE;
 
   React.useEffect(() => {
     if (JSON.parse(sessionStorage.getItem("user"))) {
