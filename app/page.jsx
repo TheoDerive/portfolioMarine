@@ -8,57 +8,44 @@ import Footer from "../component/Footer";
 import Loading from "../component/Loading";
 import "../style/style.css";
 import useWindowDimensions from "@/utils/utilsVar.js";
+import getAllCategories from "@/utils/getAllCategories.jsx";
 
 export default function Homepage() {
   const [allProject, setAllProject] = React.useState([]);
-  const [isLoad, setIsLoad] = React.useState(true);
+  const [isLoad, setIsLoad] = React.useState(false);
   const { windowWidth, windowHeight } = useWindowDimensions();
 
   React.useEffect(() => {
     setIsLoad(true);
+    async function getData() {
+      const data = await getAllCategories();
 
-    async function fetchData() {
-      try {
-        const response = await fetch(redirectionAPI("/api/all-categories"), {
-          method: "GET",
-          mode: "cors",
-        });
-        if (!response.ok) {
-          throw new Error(
-            "Une erreur est survenue lors de la récupération des données.",
-          );
-        }
-        const data = await response.json();
-        const promises = [];
+      const promises = [];
 
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].content.length > 0) {
-            for (let j = 0; j < data[i].content.length; j++) {
-              promises.push(data[i].content[j]);
-            }
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].content.length > 0) {
+          for (let j = 0; j < data[i].content.length; j++) {
+            promises.push(data[i].content[j]);
           }
         }
-
-        const allProjects = await Promise.all(promises);
-
-        const comparerDates = (objet1, objet2) => {
-          const date1 = new Date(objet1.date);
-          const date2 = new Date(objet2.date);
-
-          return date1 - date2; // Changement ici pour trier par ordre croissant
-        };
-
-        const sortedProjects = allProjects.sort(comparerDates);
-        const fiveProject = sortedProjects.slice(0, 5);
-        setAllProject(fiveProject);
-        document.documentElement.classList.add("remove-overflow");
-        setIsLoad(false);
-      } catch (err) {
-        console.error(err);
       }
-    }
 
-    fetchData();
+      const allProjects = await Promise.all(promises);
+
+      const comparerDates = (objet1, objet2) => {
+        const date1 = new Date(objet1.date);
+        const date2 = new Date(objet2.date);
+
+        return date1 - date2; // Changement ici pour trier par ordre croissant
+      };
+
+      const sortedProjects = allProjects.sort(comparerDates);
+      const fiveProject = sortedProjects.slice(0, 5);
+      setAllProject(fiveProject);
+      document.documentElement.classList.add("remove-overflow");
+      setIsLoad(false);
+    }
+    getData();
   }, []);
 
   React.useEffect(() => {
