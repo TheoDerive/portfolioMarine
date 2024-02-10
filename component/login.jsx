@@ -9,19 +9,12 @@ export default function Login({ setIsConnected }) {
   const mdp = "test";
 
   React.useEffect(() => {
-    setUser(
-      JSON.parse(sessionStorage.getItem("user"))
-        ? JSON.parse(sessionStorage.getItem("user"))
-        : {
-            password: "",
-          },
-    );
+    if (JSON.parse(sessionStorage.getItem("user"))) {
+      if (JSON.parse(sessionStorage.getItem("user")).password === mdp) {
+        setIsConnected(true);
+      }
 
-    if (
-      JSON.parse(sessionStorage.getItem("user")).password === mdp ||
-      user.password === mdp
-    ) {
-      setIsConnected(true);
+      setUser(JSON.parse(sessionStorage.getItem("user")));
     }
   }, []);
 
