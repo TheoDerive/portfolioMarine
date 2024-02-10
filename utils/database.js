@@ -15,7 +15,7 @@ const connectToDB = async () => {
       });
 
       isConnected = true;
-      console.log("Vous êtes connecté/e !", process.env.MONGODB_URI);
+      console.log("Vous êtes connecté/e !");
     } catch (e) {
       console.error(e);
     }
