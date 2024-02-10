@@ -11,7 +11,7 @@ import ModificationPage, {
   DeletePage,
   AddPage,
 } from "@/component/dashboard/Modification";
-import axios from "axios";
+import { redirectionAPI } from "@/utils/redirections";
 
 export default function () {
   const [categories, setCategories] = React.useState([]);
@@ -23,16 +23,10 @@ export default function () {
 
   React.useEffect(() => {
     async function fetchData() {
-      await axios
-        .get("/api/all-categories")
-        .then((res) => res.data)
-        .then((data) => {
-          setCategories(data);
-          setIsLoad(false);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      const res = await fetch(redirectionAPI(`/api/all-categories`));
+      const data = await res.json();
+      setCategories(data);
+      setIsLoad(false);
     }
 
     fetchData();
