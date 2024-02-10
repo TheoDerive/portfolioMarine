@@ -6,7 +6,7 @@ export async function GET(req, res) {
   await connectToDB();
 
   try {
-    const allCategories = await Category.find({});
+    const allCategories = await Category.find();
     return NextResponse.json(allCategories);
   } catch (e) {
     console.error(e);
